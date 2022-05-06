@@ -27,6 +27,8 @@ public class CustomerController {
     private ResortService resortService;
 
     String customerForm = "customers/customer-form";
+    
+    String resortIdAlias = "resortId";
 
     @InitBinder
     public void initBinder(WebDataBinder dataBinder){
@@ -47,7 +49,7 @@ public class CustomerController {
     public String addCustomer(Model theModel, @PathVariable("Id") int theId){
         Customer theCustomer = new Customer();
         theModel.addAttribute("customer", theCustomer);
-        theModel.addAttribute("resortId",theId);
+        theModel.addAttribute(resortIdAlias,theId);
         return customerForm;
     }
 
@@ -69,7 +71,7 @@ public class CustomerController {
     public String updateCustomer(@RequestParam("customerId") int theId,@RequestParam("resortId") int resortId, Model theModel){
         Customer theCustomer= customerService.findById(theId);
         theModel.addAttribute(theCustomer);
-        theModel.addAttribute("resortId",resortId);
+        theModel.addAttribute(resortIdAlias,resortId);
         return customerForm;
     }
 
@@ -83,7 +85,7 @@ public class CustomerController {
     public String findCustomers(@RequestParam("resortId") int theId, Model theModel){
         List<Customer> customers= customerService.findCustomers(theId);
         theModel.addAttribute("resortCustomers",customers);
-        theModel.addAttribute("resortId",theId);
+        theModel.addAttribute(resortIdAlias,theId);
         return "customers/showCustomers";
     }
 }
